@@ -6,139 +6,156 @@ except ImportError:
     pass
 
 app = 0
-label = 0
+mirror = 0
 error = 0
 
 def acMain(ac_version):
-    global app, label
+    global app, debug, mirror, toggleMonButton, fovValue
 
     try:
         app = ac.newApp("Shaders Patch Mirrors")
         ac.setTitle(app, "Mirrors")
-        ac.setSize(app, 200, 200)
+        ac.setSize(app, 144, 188)
 
-        label = ac.addLabel(app, "")
-        ac.setPosition(label, 48, 48)
+        debug = ac.addLabel(app, "")
+        ac.setPosition(debug, 16, 164)
 
-        fovlabel = ac.addLabel(app, "FOV")
-        ac.setPosition(fovlabel, 150, 80)
+        mirror = ac.addLabel(app, "")
+        ac.setPosition(mirror, 48, 40)
+
+        fovLabel = ac.addLabel(app, "FOV")
+        ac.setPosition(fovLabel, 102, 164)
+
+        fovValue = ac.addLabel(app, "")
+        ac.setPosition(fovValue, 108, 112)
 
         fovUpButton = ac.addButton(app, "+")
-        ac.setPosition(fovUpButton, 150, 48)
+        ac.setPosition(fovUpButton, 104, 88)
         ac.setSize(fovUpButton, 24, 24)
         ac.setFontSize(fovUpButton, 14)
         ac.addOnClickedListener(fovUpButton, fovUpMirror)
 
         fovDownButton = ac.addButton(app, "-")
-        ac.setPosition(fovDownButton, 150, 112)
+        ac.setPosition(fovDownButton, 104, 136)
         ac.setSize(fovDownButton, 24, 24)
         ac.setFontSize(fovDownButton, 14)
         ac.addOnClickedListener(fovDownButton, fovDownMirror)
 
-        toggleMonButton = ac.addButton(app, "M")
-        ac.setPosition(toggleMonButton, 150, 160)
+        toggleMonButton = ac.addButton(app, "m")
+        ac.setPosition(toggleMonButton, 104, 40)
         ac.setSize(toggleMonButton, 24, 24)
         ac.setFontSize(toggleMonButton, 14)
         ac.addOnClickedListener(toggleMonButton, toggleMonMirror)
 
         prevButton = ac.addButton(app, "-")
-        ac.setPosition(prevButton, 16, 48)
+        ac.setPosition(prevButton, 16, 40)
         ac.setSize(prevButton, 24, 24)
         ac.setFontSize(prevButton, 14)
         ac.addOnClickedListener(prevButton, prevMirror)
 
         nextButton = ac.addButton(app, "+")
-        ac.setPosition(nextButton, 64, 48)
+        ac.setPosition(nextButton, 64, 40)
         ac.setSize(nextButton, 24, 24)
         ac.setFontSize(nextButton, 14)
         ac.addOnClickedListener(nextButton, nextMirror)
 
         leftButton = ac.addButton(app, "L")
-        ac.setPosition(leftButton, 16, 120)
-        ac.setSize(leftButton, 28, 28)
+        ac.setPosition(leftButton, 16, 112)
+        ac.setSize(leftButton, 24, 24)
         ac.setFontSize(leftButton, 14)
         ac.addOnClickedListener(leftButton, leftMirror)
 
         rightButton = ac.addButton(app, "R")
-        ac.setPosition(rightButton, 76, 120)
-        ac.setSize(rightButton, 28, 28)
+        ac.setPosition(rightButton, 64, 112)
+        ac.setSize(rightButton, 24, 24)
         ac.setFontSize(rightButton, 14)
         ac.addOnClickedListener(rightButton, rightMirror)
 
         upButton = ac.addButton(app, "U")
-        ac.setPosition(upButton, 46, 90)
-        ac.setSize(upButton, 28, 28)
+        ac.setPosition(upButton, 40, 88)
+        ac.setSize(upButton, 24, 24)
         ac.setFontSize(upButton, 14)
         ac.addOnClickedListener(upButton, upMirror)
 
         downButton = ac.addButton(app, "D")
-        ac.setPosition(downButton, 46, 150)
-        ac.setSize(downButton, 28, 28)
+        ac.setPosition(downButton, 40, 136)
+        ac.setSize(downButton, 24, 24)
         ac.setFontSize(downButton, 14)
         ac.addOnClickedListener(downButton, downMirror)
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def leftMirror(*args):
     try:
         ac.ext_mirrorLeft()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def rightMirror(*args):
     try:
         ac.ext_mirrorRight()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def upMirror(*args):
     try:
         ac.ext_mirrorUp()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def downMirror(*args):
     try:
         ac.ext_mirrorDown()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def prevMirror(*args):
     try:
         ac.ext_mirrorPrev()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def nextMirror(*args):
     try:
         ac.ext_mirrorNext()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def fovUpMirror(*args):
     try:
         ac.ext_mirrorFovUp()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def fovDownMirror(*args):
     try:
         ac.ext_mirrorFovDown()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
 def toggleMonMirror(*args):
     try:
         ac.ext_mirrorToggleMon()
     except:
-        ac.log("Unexpected error:" + traceback.format_exc())
+        acTrace()
 
+def acTrace(*args):
+    global error
+    if error < 10:
+        ac.log("Unexpected error:" + traceback.format_exc())
+    error += 1
+    ac.setText(debug, "Error")
+	
 def acUpdate(delta_t):
     global error
 
     try:
-        ac.setText(label, str(ac.ext_mirrorCurrent()))
+        ac.setText(mirror, str(ac.ext_mirrorCurrent()))
+        params = ac.ext_mirrorParams()
+        ac.setText(fovValue, str(int(params[1])))
+        if params[0] == True:
+            ac.setText(toggleMonButton, "M")
+        else:
+            ac.setText(toggleMonButton, "m")
     except:
-        if error < 10:
-            ac.log("Unexpected error:" + traceback.format_exc())
-        ac.setText(label, "Unexpected error:" + traceback.format_exc())
+        acTrace()
