@@ -8,7 +8,7 @@ except ImportError:
 app = 0
 error = 0
 rainStrengthValue = 0
-ranWiperSpeedValue = 0
+rainWiperSpeedValue = 0
 
 def acMain(ac_version):
     global app, rainStrengthValue, rainWiperSpeedValue
