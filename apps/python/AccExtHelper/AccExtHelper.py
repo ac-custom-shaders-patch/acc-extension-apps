@@ -9,18 +9,20 @@ except ImportError:
 app = 0
 label = 0
 stepBackButton = 0
-vaoDisableButton = 0
+vaoToggleButton = 0
 vaoOnlyButton = 0
-vaoNormalButton = 0
+vaoNormalDebugButton = 0
+copyCameraCoordsButton = 0
 doorToggleButton = 0
 driverToggleButton = 0
+isVaoActive = True
 areDoorsOpen = False
 isDriverVisible = True
 error = 0
 
 def acMain(ac_version):
     global app, label, stepBackButton
-    global vaoDisableButton, vaoOnlyButton, vaoNormalButton
+    global vaoToggleButton, vaoOnlyButton, vaoNormalDebugButton, copyCameraCoordsButton
     global doorToggleButton, driverToggleButton
 
     try:
@@ -57,11 +59,17 @@ def acMain(ac_version):
         ac.setFontSize(doorToggleButton, 14)
         ac.addOnClickedListener(doorToggleButton, doorToggle)
 
-        vaoDisableButton = ac.addButton(app, "V off")
-        ac.setPosition(vaoDisableButton, 20, 158)
-        ac.setSize(vaoDisableButton, 40, 22)
-        ac.setFontSize(vaoDisableButton, 14)
-        ac.addOnClickedListener(vaoDisableButton, vaoDisable)
+        copyCameraCoordsButton = ac.addButton(app, "Copy")
+        ac.setPosition(copyCameraCoordsButton, 120, 132)
+        ac.setSize(copyCameraCoordsButton, 40, 22)
+        ac.setFontSize(copyCameraCoordsButton, 14)
+        ac.addOnClickedListener(copyCameraCoordsButton, copyCameraCoords)
+
+        vaoToggleButton = ac.addButton(app, "V on/off")
+        ac.setPosition(vaoToggleButton, 20, 158)
+        ac.setSize(vaoToggleButton, 40, 22)
+        ac.setFontSize(vaoToggleButton, 14)
+        ac.addOnClickedListener(vaoToggleButton, vaoToggle)
 
         vaoOnlyButton = ac.addButton(app, "V only")
         ac.setPosition(vaoOnlyButton, 70, 158)
@@ -69,11 +77,11 @@ def acMain(ac_version):
         ac.setFontSize(vaoOnlyButton, 14)
         ac.addOnClickedListener(vaoOnlyButton, vaoOnly)
 
-        vaoNormalButton = ac.addButton(app, "V on")
-        ac.setPosition(vaoNormalButton, 120, 158)
-        ac.setSize(vaoNormalButton, 40, 22)
-        ac.setFontSize(vaoNormalButton, 14)
-        ac.addOnClickedListener(vaoNormalButton, vaoNormal)
+        vaoNormalDebugButton = ac.addButton(app, "V nm")
+        ac.setPosition(vaoNormalDebugButton, 120, 158)
+        ac.setSize(vaoNormalDebugButton, 40, 22)
+        ac.setFontSize(vaoNormalDebugButton, 14)
+        ac.addOnClickedListener(vaoNormalDebugButton, vaoNormalDebug)
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
@@ -82,6 +90,7 @@ def doorToggle(*args):
     try:
         areDoorsOpen = not areDoorsOpen
         ac.ext_setDoorsOpen(areDoorsOpen)
+        ac.ext_setTrackConditionInput('CAR_DOORS_OPENED', 1.0 if areDoorsOpen else 0.0)
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
@@ -93,21 +102,33 @@ def driverToggle(*args):
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
-def vaoDisable(*args):
+def copyCameraCoords(*args):
     try:
-        ac.ext_vaoDisable()
+        ac.ext_setClipboardData(', '.join(str(round(x, 2)) for x in ac.ext_getCameraPos()))
+    except:
+        ac.log("Unexpected error:" + traceback.format_exc())
+
+def vaoToggle(*args):
+    global isVaoActive
+    try:
+        isVaoActive = not isVaoActive
+        ac.ext_setVaoActive(isVaoActive)
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
 def vaoOnly(*args):
+    global isVaoActive
     try:
+        isVaoActive = False
         ac.ext_vaoOnly()
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
-def vaoNormal(*args):
+def vaoNormalDebug(*args):
+    global isVaoActive
     try:
-        ac.ext_vaoNormal()
+        isVaoActive = False
+        ac.ext_vaoNormalDebug()
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
@@ -179,7 +200,7 @@ def acUpdate(delta_t):
             + "\nVisible lights: " + str(ac.ext_getLightsVisible())
             # + "\nMirror lights: " + str(ac.ext_getLightsMirrorVisible())
             + "\nAmbient darkness: " + str(round(ac.ext_getAmbientMult(), 3))
-            + "\nCamera pos: " + ', '.join(str(round(x, 1)) for x in ac.ext_getCameraPos())
+            + "\nCam.: " + ', '.join(str(round(x, 1)) for x in ac.ext_getCameraPos())
             # + "\nVersion: " + ac.ext_version()
             + "\nGr.: " + str(round(ac.ext_getTyreGrain(0, 3), 3)) + ", bl.: " + str(round(ac.ext_getTyreBlister(0, 3), 3)) + ", FS: " + str(round(ac.ext_getTyreFlatSpot(0, 3), 3))
             # + "\nAngle sp. (dbg.): " + str(round(ac.ext_getAngleSpeed(), 3))
