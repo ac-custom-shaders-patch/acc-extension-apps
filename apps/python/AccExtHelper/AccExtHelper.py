@@ -10,19 +10,21 @@ app = 0
 label = 0
 stepBackButton = 0
 vaoToggleButton = 0
-vaoOnlyButton = 0
-vaoNormalDebugButton = 0
+vaoDebugButton = 0
+lightsDebugButton = 0
 copyCameraCoordsButton = 0
 doorToggleButton = 0
 driverToggleButton = 0
 isVaoActive = True
+currentVaoDebugMode = 0
+isLightsDebugOn = False
 areDoorsOpen = False
 isDriverVisible = True
 error = 0
 
 def acMain(ac_version):
     global app, label, stepBackButton
-    global vaoToggleButton, vaoOnlyButton, vaoNormalDebugButton, copyCameraCoordsButton
+    global vaoToggleButton, vaoDebugButton, lightsDebugButton, copyCameraCoordsButton
     global doorToggleButton, driverToggleButton
 
     try:
@@ -65,23 +67,23 @@ def acMain(ac_version):
         ac.setFontSize(copyCameraCoordsButton, 14)
         ac.addOnClickedListener(copyCameraCoordsButton, copyCameraCoords)
 
-        vaoToggleButton = ac.addButton(app, "V on/off")
+        vaoToggleButton = ac.addButton(app, "V +/−")
         ac.setPosition(vaoToggleButton, 20, 158)
         ac.setSize(vaoToggleButton, 40, 22)
         ac.setFontSize(vaoToggleButton, 14)
         ac.addOnClickedListener(vaoToggleButton, vaoToggle)
 
-        vaoOnlyButton = ac.addButton(app, "V only")
-        ac.setPosition(vaoOnlyButton, 70, 158)
-        ac.setSize(vaoOnlyButton, 40, 22)
-        ac.setFontSize(vaoOnlyButton, 14)
-        ac.addOnClickedListener(vaoOnlyButton, vaoOnly)
+        vaoDebugButton = ac.addButton(app, "V o/N")
+        ac.setPosition(vaoDebugButton, 70, 158)
+        ac.setSize(vaoDebugButton, 40, 22)
+        ac.setFontSize(vaoDebugButton, 14)
+        ac.addOnClickedListener(vaoDebugButton, vaoDebug)
 
-        vaoNormalDebugButton = ac.addButton(app, "V nm")
-        ac.setPosition(vaoNormalDebugButton, 120, 158)
-        ac.setSize(vaoNormalDebugButton, 40, 22)
-        ac.setFontSize(vaoNormalDebugButton, 14)
-        ac.addOnClickedListener(vaoNormalDebugButton, vaoNormalDebug)
+        lightsDebugButton = ac.addButton(app, "🔦")
+        ac.setPosition(lightsDebugButton, 120, 158)
+        ac.setSize(lightsDebugButton, 40, 22)
+        ac.setFontSize(lightsDebugButton, 14)
+        ac.addOnClickedListener(lightsDebugButton, lightsDebug)
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
@@ -109,26 +111,24 @@ def copyCameraCoords(*args):
         ac.log("Unexpected error:" + traceback.format_exc())
 
 def vaoToggle(*args):
-    global isVaoActive
+    global isVaoActive, currentVaoDebugMode
     try:
         isVaoActive = not isVaoActive
+        currentVaoDebugMode = 0
         ac.ext_setVaoActive(isVaoActive)
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
-def vaoOnly(*args):
-    global isVaoActive
+def vaoDebug(*args):
+    global isVaoActive, currentVaoDebugMode
     try:
         isVaoActive = False
-        ac.ext_vaoOnly()
-    except:
-        ac.log("Unexpected error:" + traceback.format_exc())
-
-def vaoNormalDebug(*args):
-    global isVaoActive
-    try:
-        isVaoActive = False
-        ac.ext_vaoNormalDebug()
+        if currentVaoDebugMode == 1:
+            ac.ext_vaoNormalDebug()
+            currentVaoDebugMode = 2
+        else:
+            ac.ext_vaoOnly()
+            currentVaoDebugMode = 1
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
@@ -138,6 +138,20 @@ class LightsDebugMode:
     BoundingBox = 2
     BoundingSphere = 4
     Text = 8
+
+def lightsDebug(*args):
+    global isLightsDebugOn
+    try:
+        isLightsDebugOn = not isLightsDebugOn
+        if isLightsDebugOn:
+            lightsDebugCount = 10
+            lightsDebugDistance = 100.0
+            lightsDebugMode = LightsDebugMode.Outline | LightsDebugMode.BoundingBox | LightsDebugMode.Text
+            ac.ext_debugLights("?", lightsDebugCount, lightsDebugDistance, lightsDebugMode)
+        else:
+            ac.ext_debugLights("?", 0, 0, 0)
+    except:
+        ac.log("Unexpected error:" + traceback.format_exc())
 
 class ApplyTrackConfigFlags:
     Nothing = 0
