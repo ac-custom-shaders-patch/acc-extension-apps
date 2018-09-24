@@ -1,6 +1,9 @@
 # acc-extension-apps
 
-Python apps for Assetto Corsa Custom Shaders Patch
+## source: 
+  - https://discordapp.com/channels/453595061788344330/
+
+## Python apps for Assetto Corsa Custom Shaders Patch
 
 -3 python apps: 
 
