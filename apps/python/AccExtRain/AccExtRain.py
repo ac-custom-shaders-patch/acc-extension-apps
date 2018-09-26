@@ -2,6 +2,7 @@ try:
     import ac
     import acsys
     import traceback
+    import time
 except ImportError:
     pass
 
@@ -9,18 +10,18 @@ app = 0
 error = 0
 rainStrengthValue = 0
 rainWiperSpeedValue = 0
+timer = 0.0
 
 def acMain(ac_version):
     global app, rainStrengthValue, rainWiperSpeedValue
-
     try:
         app = ac.newApp("Shaders Patch Rain")
         ac.setTitle(app, "Rain")
-        ac.setSize(app, 184, 188)
+        ac.setSize(app, 174, 108)
 
         y = 40
         rainStrengthLabel = ac.addLabel(app, "Strength")
-        ac.setPosition(rainStrengthLabel, 120, y)
+        ac.setPosition(rainStrengthLabel, 110, y)
 
         rainStrengthValue = ac.addLabel(app, "")
         ac.setPosition(rainStrengthValue, 48, y)
@@ -39,7 +40,7 @@ def acMain(ac_version):
 
         y = 72
         rainWiperSpeedLabel = ac.addLabel(app, "Wiper")
-        ac.setPosition(rainWiperSpeedLabel, 120, y)
+        ac.setPosition(rainWiperSpeedLabel, 110, y)
 
         rainWiperSpeedValue = ac.addLabel(app, "")
         ac.setPosition(rainWiperSpeedValue, 48, y)
@@ -55,7 +56,7 @@ def acMain(ac_version):
         ac.setSize(rainWiperSpeedUpButton, 24, 24)
         ac.setFontSize(rainWiperSpeedUpButton, 14)
         ac.addOnClickedListener(rainWiperSpeedUpButton, rainWiperSpeedUp)
-		
+
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
@@ -73,12 +74,15 @@ def rainWiperSpeedUp(*args):
 
 def acUpdate(delta_t):
     global error, rainStrengthValue, rainWiperSpeedValue
-
-    try:
-        params = ac.ext_rainParams()
-        ac.setText(rainStrengthValue, str(round(params[0], 1)))
-        ac.setText(rainWiperSpeedValue, str(round(params[1], 1)))
-    except:
-        if error < 10:
-            ac.log("Unexpected error:" + traceback.format_exc())
-        ac.setText(debug, "Unexpected error:" + traceback.format_exc())
+    global timer
+    timer += delta_t
+    if timer > 0.25:
+        timer = 0.0
+        try:
+            params = ac.ext_rainParams()
+            ac.setText(rainStrengthValue, str(round(params[0], 1)))
+            ac.setText(rainWiperSpeedValue, str(round(params[1], 1)))
+        except:
+            if error < 10:
+                ac.log("Unexpected error:" + traceback.format_exc())
+            ac.setText(debug, "Unexpected error:" + traceback.format_exc())
