@@ -3,6 +3,7 @@ try:
     import acsys
     import traceback
     import random
+    import time
 except ImportError:
     pass
 
@@ -21,6 +22,7 @@ isLightsDebugOn = False
 areDoorsOpen = False
 isDriverVisible = True
 error = 0
+timer = 0
 
 def acMain(ac_version):
     global app, label, stepBackButton
@@ -206,24 +208,27 @@ def takeAStepBack(*args):
 
 def acUpdate(delta_t):
     global error
-
-    try:
-        # ac.ext_setCameraFov(30)
-        ac.setText(label, 
-            "Lights: " + str(ac.ext_getLightsNum())
-            + "\nVisible lights: " + str(ac.ext_getLightsVisible())
-            # + "\nMirror lights: " + str(ac.ext_getLightsMirrorVisible())
-            + "\nAmbient darkness: " + str(round(ac.ext_getAmbientMult(), 3))
-            + "\nCam.: " + ', '.join(str(round(x, 1)) for x in ac.ext_getCameraPos())
-            # + "\nVersion: " + ac.ext_version()
-            + "\nGr.: " + str(round(ac.ext_getTyreGrain(0, 3), 3)) + ", bl.: " + str(round(ac.ext_getTyreBlister(0, 3), 3)) + ", FS: " + str(round(ac.ext_getTyreFlatSpot(0, 3), 3))
-            # + "\nAngle sp. (dbg.): " + str(round(ac.ext_getAngleSpeed(), 3))
-            # + "\nCamera matr.: " + ', '.join(str(round(x, 2)) for x in ac.ext_getCameraMatrix())
-            # + "\nCamera proj.: " + ', '.join(str(round(x, 2)) for x in ac.ext_getCameraProj())
-            # + "\nCamera view: " + ', '.join(str(round(x, 2)) for x in ac.ext_getCameraView())
-            # + "\nFOV: " + str(round(ac.ext_getCameraFov(), 3))
-            )
-    except:
-        if error < 10:
-            ac.log("Unexpected error:" + traceback.format_exc())
-        ac.setText(label, "Unexpected error:" + traceback.format_exc())
+    global timer
+    timer += delta_t
+    if timer > 0.1:
+        timer = 0.0
+        try:
+            # ac.ext_setCameraFov(30)
+            ac.setText(label,
+                "Lights: " + str(ac.ext_getLightsNum())
+                + "\nVisible lights: " + str(ac.ext_getLightsVisible())
+                # + "\nMirror lights: " + str(ac.ext_getLightsMirrorVisible())
+                + "\nAmbient darkness: " + str(round(ac.ext_getAmbientMult(), 3))
+                + "\nCam.: " + ', '.join(str(round(x, 1)) for x in ac.ext_getCameraPos())
+                # + "\nVersion: " + ac.ext_version()
+                + "\nGr.: " + str(round(ac.ext_getTyreGrain(0, 3), 3)) + ", bl.: " + str(round(ac.ext_getTyreBlister(0, 3), 3)) + ", FS: " + str(round(ac.ext_getTyreFlatSpot(0, 3), 3))
+                # + "\nAngle sp. (dbg.): " + str(round(ac.ext_getAngleSpeed(), 3))
+                # + "\nCamera matr.: " + ', '.join(str(round(x, 2)) for x in ac.ext_getCameraMatrix())
+                # + "\nCamera proj.: " + ', '.join(str(round(x, 2)) for x in ac.ext_getCameraProj())
+                # + "\nCamera view: " + ', '.join(str(round(x, 2)) for x in ac.ext_getCameraView())
+                # + "\nFOV: " + str(round(ac.ext_getCameraFov(), 3))
+                )
+        except:
+            if error < 10:
+                ac.log("Unexpected error:" + traceback.format_exc())
+            ac.setText(label, "Unexpected error:" + traceback.format_exc())
