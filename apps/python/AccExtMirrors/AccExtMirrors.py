@@ -8,14 +8,14 @@ except ImportError:
 app = 0
 mirror = 0
 error = 0
+timer = 0
 
 def acMain(ac_version):
     global app, debug, mirror, toggleMonButton, fovValue
-
     try:
         app = ac.newApp("Shaders Patch Mirrors")
         ac.setTitle(app, "Mirrors")
-        ac.setSize(app, 144, 188)
+        ac.setSize(app, 144, 168)
 
         debug = ac.addLabel(app, "")
         ac.setPosition(debug, 16, 164)
@@ -145,17 +145,20 @@ def acTrace(*args):
         ac.log("Unexpected error:" + traceback.format_exc())
     error += 1
     ac.setText(debug, "Error")
-	
-def acUpdate(delta_t):
-    global error
 
-    try:
-        ac.setText(mirror, str(ac.ext_mirrorCurrent()))
-        params = ac.ext_mirrorParams()
-        ac.setText(fovValue, str(int(params[1])))
-        if params[0] == True:
-            ac.setText(toggleMonButton, "M")
-        else:
-            ac.setText(toggleMonButton, "m")
-    except:
-        acTrace()
+def acUpdate(delta_t):
+    global error, mirror
+    global timer
+    timer += delta_t
+    if timer > 0.25:
+        timer = 0.0
+        try:
+            ac.setText(mirror, str(ac.ext_mirrorCurrent()))
+            params = ac.ext_mirrorParams()
+            ac.setText(fovValue, str(int(params[1])))
+            if params[0] == True:
+                ac.setText(toggleMonButton, "M")
+            else:
+                ac.setText(toggleMonButton, "m")
+        except:
+            acTrace()
