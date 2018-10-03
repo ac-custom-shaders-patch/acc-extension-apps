@@ -9,19 +9,24 @@ app = 0
 mirror = 0
 error = 0
 timer = 0
+roles = "NLCR"
 
 def acMain(ac_version):
-    global app, debug, mirror, toggleMonButton, fovValue
+    global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue
     try:
         app = ac.newApp("Shaders Patch Mirrors")
         ac.setTitle(app, "Mirrors")
-        ac.setSize(app, 144, 168)
+        ac.setSize(app, 144, 188)
 
         debug = ac.addLabel(app, "")
         ac.setPosition(debug, 16, 164)
 
-        mirror = ac.addLabel(app, "")
-        ac.setPosition(mirror, 48, 40)
+        mirrorrole = ac.addLabel(app, "")
+        ac.setPosition(mirrorrole, 44, 40)
+
+        mirrorindex = ac.addLabel(app, "")
+        ac.setPosition(mirrorindex, 54, 46)
+        ac.setFontSize(mirrorindex, 12)
 
         fovLabel = ac.addLabel(app, "FOV")
         ac.setPosition(fovLabel, 102, 164)
@@ -147,14 +152,20 @@ def acTrace(*args):
     ac.setText(debug, "Error")
 
 def acUpdate(delta_t):
-    global error, mirror
+    global error
     global timer
     timer += delta_t
     if timer > 0.25:
         timer = 0.0
         try:
-            ac.setText(mirror, str(ac.ext_mirrorCurrent()))
             params = ac.ext_mirrorParams()
+            ac.setText(mirrorrole, roles[int(params[3])])
+            index = int(params[4])
+            if index > 0:
+                ac.setText(mirrorindex, str(index))
+            else:
+                ac.setText(mirrorindex, "")
+				
             ac.setText(fovValue, str(int(params[1])))
             if params[0] == True:
                 ac.setText(toggleMonButton, "M")
