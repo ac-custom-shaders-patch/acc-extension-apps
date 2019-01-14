@@ -21,6 +21,10 @@ timeOffsetMinusPlayButton = 0
 timeOffsetPlusPlayButton = 0
 timeOffsetMinusPlaySmallButton = 0
 timeOffsetPlusPlaySmallButton = 0
+timeOffsetMinusMonthButton = 0
+timeOffsetPlusMonthButton = 0
+timeOffsetMinusYearButton = 0
+timeOffsetPlusYearButton = 0
 error = 0
 timer = 0
 
@@ -28,90 +32,133 @@ def acMain(ac_version):
     global app, label, stepBackButton
     global timeOffsetMinusSmallButton, timeOffsetPlusSmallButton, timeOffsetMinusBigButton, timeOffsetPlusBigButton, timeOffsetMinusHugeButton, timeOffsetPlusHugeButton, timeOffsetMinusPlayButton, timeOffsetPlusPlayButton
     global timeOffsetMinusSmallerButton, timeOffsetPlusSmallerButton, timeOffsetMinusPlaySmallButton, timeOffsetPlusPlaySmallButton
+    global timeOffsetMinusMonthButton, timeOffsetPlusMonthButton, timeOffsetMinusYearButton, timeOffsetPlusYearButton
     global doorToggleButton, driverToggleButton
 
     try:
         app = ac.newApp("Shaders Patch Weather")
         ac.setTitle(app, "   Weather FX")
-        ac.setSize(app, 420, 360)
+        ac.setSize(app, 340, 360)
 
         label = ac.addLabel(app, "")
         ac.setFontSize(label, 11)
         ac.setPosition(label, 5, 30)
 
         timeOffsetMinusSmallerButton = ac.addButton(app, "−5min")
-        ac.setPosition(timeOffsetMinusSmallerButton, 8, 300)
-        ac.setSize(timeOffsetMinusSmallerButton, 40, 22)
-        ac.setFontSize(timeOffsetMinusSmallerButton, 14)
+        ac.setPosition(timeOffsetMinusSmallerButton, 8, 303)
+        ac.setSize(timeOffsetMinusSmallerButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusSmallerButton, 12)
         ac.addOnClickedListener(timeOffsetMinusSmallerButton, timeOffsetMinusSmaller)
 
         timeOffsetPlusSmallerButton = ac.addButton(app, "+5min")
-        ac.setPosition(timeOffsetPlusSmallerButton, 58, 300)
-        ac.setSize(timeOffsetPlusSmallerButton, 40, 22)
-        ac.setFontSize(timeOffsetPlusSmallerButton, 14)
+        ac.setPosition(timeOffsetPlusSmallerButton, 58, 303)
+        ac.setSize(timeOffsetPlusSmallerButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusSmallerButton, 12)
         ac.addOnClickedListener(timeOffsetPlusSmallerButton, timeOffsetPlusSmaller)
 
-
-
         timeOffsetMinusSmallButton = ac.addButton(app, "−45min")
-        ac.setPosition(timeOffsetMinusSmallButton, 8, 330)
-        ac.setSize(timeOffsetMinusSmallButton, 40, 22)
-        ac.setFontSize(timeOffsetMinusSmallButton, 14)
+        ac.setPosition(timeOffsetMinusSmallButton, 8, 320)
+        ac.setSize(timeOffsetMinusSmallButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusSmallButton, 12)
         ac.addOnClickedListener(timeOffsetMinusSmallButton, timeOffsetMinusSmall)
 
         timeOffsetPlusSmallButton = ac.addButton(app, "+45min")
-        ac.setPosition(timeOffsetPlusSmallButton, 58, 330)
-        ac.setSize(timeOffsetPlusSmallButton, 40, 22)
-        ac.setFontSize(timeOffsetPlusSmallButton, 14)
+        ac.setPosition(timeOffsetPlusSmallButton, 58, 320)
+        ac.setSize(timeOffsetPlusSmallButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusSmallButton, 12)
         ac.addOnClickedListener(timeOffsetPlusSmallButton, timeOffsetPlusSmall)
 
         timeOffsetMinusBigButton = ac.addButton(app, "−6hr")
-        ac.setPosition(timeOffsetMinusBigButton, 108, 330)
-        ac.setSize(timeOffsetMinusBigButton, 40, 22)
-        ac.setFontSize(timeOffsetMinusBigButton, 14)
+        ac.setPosition(timeOffsetMinusBigButton, 8, 337)
+        ac.setSize(timeOffsetMinusBigButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusBigButton, 12)
         ac.addOnClickedListener(timeOffsetMinusBigButton, timeOffsetMinusBig)
 
         timeOffsetPlusBigButton = ac.addButton(app, "+6hr")
-        ac.setPosition(timeOffsetPlusBigButton, 158, 330)
-        ac.setSize(timeOffsetPlusBigButton, 40, 22)
-        ac.setFontSize(timeOffsetPlusBigButton, 14)
+        ac.setPosition(timeOffsetPlusBigButton, 58, 337)
+        ac.setSize(timeOffsetPlusBigButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusBigButton, 12)
         ac.addOnClickedListener(timeOffsetPlusBigButton, timeOffsetPlusBig)
 
+
+
         timeOffsetMinusHugeButton = ac.addButton(app, "−day")
-        ac.setPosition(timeOffsetMinusHugeButton, 208, 330)
-        ac.setSize(timeOffsetMinusHugeButton, 40, 22)
-        ac.setFontSize(timeOffsetMinusHugeButton, 14)
+        ac.setPosition(timeOffsetMinusHugeButton, 118, 303)
+        ac.setSize(timeOffsetMinusHugeButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusHugeButton, 12)
         ac.addOnClickedListener(timeOffsetMinusHugeButton, timeOffsetMinusHuge)
 
         timeOffsetPlusHugeButton = ac.addButton(app, "+day")
-        ac.setPosition(timeOffsetPlusHugeButton, 258, 330)
-        ac.setSize(timeOffsetPlusHugeButton, 40, 22)
-        ac.setFontSize(timeOffsetPlusHugeButton, 14)
+        ac.setPosition(timeOffsetPlusHugeButton, 168, 303)
+        ac.setSize(timeOffsetPlusHugeButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusHugeButton, 12)
         ac.addOnClickedListener(timeOffsetPlusHugeButton, timeOffsetPlusHuge)
 
+        timeOffsetMinusMonthButton = ac.addButton(app, "−month")
+        ac.setPosition(timeOffsetMinusMonthButton, 118, 320)
+        ac.setSize(timeOffsetMinusMonthButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusMonthButton, 12)
+        ac.addOnClickedListener(timeOffsetMinusMonthButton, timeOffsetMinusMonth)
+
+        timeOffsetPlusMonthButton = ac.addButton(app, "+month")
+        ac.setPosition(timeOffsetPlusMonthButton, 168, 320)
+        ac.setSize(timeOffsetPlusMonthButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusMonthButton, 12)
+        ac.addOnClickedListener(timeOffsetPlusMonthButton, timeOffsetPlusMonth)
+
+        timeOffsetMinusYearButton = ac.addButton(app, "−year")
+        ac.setPosition(timeOffsetMinusYearButton, 118, 337)
+        ac.setSize(timeOffsetMinusYearButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusYearButton, 12)
+        ac.addOnClickedListener(timeOffsetMinusYearButton, timeOffsetMinusYear)
+
+        timeOffsetPlusYearButton = ac.addButton(app, "+year")
+        ac.setPosition(timeOffsetPlusYearButton, 168, 337)
+        ac.setSize(timeOffsetPlusYearButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusYearButton, 12)
+        ac.addOnClickedListener(timeOffsetPlusYearButton, timeOffsetPlusYear)
+
+
+
+
+        timeOffsetMinusPlaySmallButton = ac.addButton(app, "- 1x")
+        ac.setPosition(timeOffsetMinusPlaySmallButton, 228, 303)
+        ac.setSize(timeOffsetMinusPlaySmallButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusPlaySmallButton, 12)
+        ac.addOnClickedListener(timeOffsetMinusPlaySmallButton, timeOffsetMinusPlaySmall)
+
+        timeOffsetPlusPlaySmallButton = ac.addButton(app, "+ 1x")
+        ac.setPosition(timeOffsetPlusPlaySmallButton, 278, 303)
+        ac.setSize(timeOffsetPlusPlaySmallButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusPlaySmallButton, 12)
+        ac.addOnClickedListener(timeOffsetPlusPlaySmallButton, timeOffsetPlusPlaySmall)
+
         timeOffsetMinusPlayButton = ac.addButton(app, "- 10x")
-        ac.setPosition(timeOffsetMinusPlayButton, 308, 330)
-        ac.setSize(timeOffsetMinusPlayButton, 40, 22)
-        ac.setFontSize(timeOffsetMinusPlayButton, 14)
+        ac.setPosition(timeOffsetMinusPlayButton, 228, 320)
+        ac.setSize(timeOffsetMinusPlayButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusPlayButton, 12)
         ac.addOnClickedListener(timeOffsetMinusPlayButton, timeOffsetMinusPlay)
 
         timeOffsetPlusPlayButton = ac.addButton(app, "+ 10x")
-        ac.setPosition(timeOffsetPlusPlayButton, 358, 330)
-        ac.setSize(timeOffsetPlusPlayButton, 40, 22)
-        ac.setFontSize(timeOffsetPlusPlayButton, 14)
+        ac.setPosition(timeOffsetPlusPlayButton, 278, 320)
+        ac.setSize(timeOffsetPlusPlayButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusPlayButton, 12)
         ac.addOnClickedListener(timeOffsetPlusPlayButton, timeOffsetPlusPlay)
 
-        timeOffsetMinusPlaySmallButton = ac.addButton(app, "- 2x")
-        ac.setPosition(timeOffsetMinusPlaySmallButton, 308, 300)
-        ac.setSize(timeOffsetMinusPlaySmallButton, 40, 22)
-        ac.setFontSize(timeOffsetMinusPlaySmallButton, 14)
-        ac.addOnClickedListener(timeOffsetMinusPlaySmallButton, timeOffsetMinusPlaySmall)
+        timeOffsetMinusPlayBigButton = ac.addButton(app, "- 50x")
+        ac.setPosition(timeOffsetMinusPlayBigButton, 228, 337)
+        ac.setSize(timeOffsetMinusPlayBigButton, 50, 15)
+        ac.setFontSize(timeOffsetMinusPlayBigButton, 12)
+        ac.addOnClickedListener(timeOffsetMinusPlayBigButton, timeOffsetMinusBigPlay)
 
-        timeOffsetPlusPlaySmallButton = ac.addButton(app, "+ 2x")
-        ac.setPosition(timeOffsetPlusPlaySmallButton, 358, 300)
-        ac.setSize(timeOffsetPlusPlaySmallButton, 40, 22)
-        ac.setFontSize(timeOffsetPlusPlaySmallButton, 14)
-        ac.addOnClickedListener(timeOffsetPlusPlaySmallButton, timeOffsetPlusPlaySmall)
+        timeOffsetPlusPlayBigButton = ac.addButton(app, "+ 50x")
+        ac.setPosition(timeOffsetPlusPlayBigButton, 278, 337)
+        ac.setSize(timeOffsetPlusPlayBigButton, 50, 15)
+        ac.setFontSize(timeOffsetPlusPlayBigButton, 12)
+        ac.addOnClickedListener(timeOffsetPlusPlayBigButton, timeOffsetPlusBigPlay)
+
+        ac.setVisible(app,1)
+
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
@@ -163,8 +210,41 @@ def timeOffsetPlusHuge(*args):
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
 
+def timeOffsetMinusMonth(*args):
+    try:
+        ac.ext_weatherTimeOffset(-30 * 24 * 60 * 60)
+    except:
+        ac.log("Unexpected error:" + traceback.format_exc())
+
+def timeOffsetPlusMonth(*args):
+    try:
+        ac.ext_weatherTimeOffset(30 * 24 * 60 * 60)
+    except:
+        ac.log("Unexpected error:" + traceback.format_exc())
+
+def timeOffsetMinusYear(*args):
+    try:
+        ac.ext_weatherTimeOffset(-365 * 24 * 60 * 60)
+    except:
+        ac.log("Unexpected error:" + traceback.format_exc())
+
+def timeOffsetPlusYear(*args):
+    try:
+        ac.ext_weatherTimeOffset(365 * 24 * 60 * 60)
+    except:
+        ac.log("Unexpected error:" + traceback.format_exc())
+
+
 speed = 0
 day_offset = 0
+
+def timeOffsetMinusPlaySmall(*args):
+    global speed
+    speed -= 1
+
+def timeOffsetPlusPlaySmall(*args):
+    global speed
+    speed += 1
 
 def timeOffsetMinusPlay(*args):
     global speed
@@ -174,13 +254,13 @@ def timeOffsetPlusPlay(*args):
     global speed
     speed += 10
 
-def timeOffsetMinusPlaySmall(*args):
+def timeOffsetMinusBigPlay(*args):
     global speed
-    speed -= 2
+    speed -= 50
 
-def timeOffsetPlusPlaySmall(*args):
+def timeOffsetPlusBigPlay(*args):
     global speed
-    speed += 2
+    speed += 50
 
 def acUpdate(delta_t):
     global error, timer, day_offset
