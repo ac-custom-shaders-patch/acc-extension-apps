@@ -157,7 +157,7 @@ def acMain(ac_version):
         ac.setFontSize(timeOffsetPlusPlayBigButton, 12)
         ac.addOnClickedListener(timeOffsetPlusPlayBigButton, timeOffsetPlusBigPlay)
 
-        ac.setVisible(app,1)
+        # ac.setVisible(app,1)
 
     except:
         ac.log("Unexpected error:" + traceback.format_exc())
