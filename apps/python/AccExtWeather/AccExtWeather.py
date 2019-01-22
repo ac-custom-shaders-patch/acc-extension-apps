@@ -120,18 +120,6 @@ def appCreateMyself():
     ac.setFontSize(timeOffsetPlusSmallButton, fntsize)
     ac.addOnClickedListener(timeOffsetPlusSmallButton, timeOffsetPlusSmall)
     xpos+=dx+10*mult
-    timeOffsetMinusBigButton = ac.addButton(app, "−6hr")
-    ac.setPosition(timeOffsetMinusBigButton, xpos, ypos)
-    ac.setSize(timeOffsetMinusBigButton, 50*mult, dy-1)
-    ac.setFontSize(timeOffsetMinusBigButton, fntsize)
-    ac.addOnClickedListener(timeOffsetMinusBigButton, timeOffsetMinusBig)
-    xpos+=dx
-    timeOffsetPlusBigButton = ac.addButton(app, "+6hr")
-    ac.setPosition(timeOffsetPlusBigButton, xpos, ypos)
-    ac.setSize(timeOffsetPlusBigButton, 50*mult, dy-1)
-    ac.setFontSize(timeOffsetPlusBigButton, fntsize)
-    ac.addOnClickedListener(timeOffsetPlusBigButton, timeOffsetPlusBig)
-    xpos+=dx+10*mult
     timeOffsetMinusMonthButton = ac.addButton(app, "−month")
     ac.setPosition(timeOffsetMinusMonthButton, xpos, ypos)
     ac.setSize(timeOffsetMinusMonthButton, 50*mult, dy-1)
@@ -143,21 +131,6 @@ def appCreateMyself():
     ac.setSize(timeOffsetPlusMonthButton, 50*mult, dy-1)
     ac.setFontSize(timeOffsetPlusMonthButton, fntsize)
     ac.addOnClickedListener(timeOffsetPlusMonthButton, timeOffsetPlusMonth)
-
-
-    xpos=10
-    ypos=25+dy*2
-    timeOffsetMinusYearButton = ac.addButton(app, "−year")
-    ac.setPosition(timeOffsetMinusYearButton, xpos, ypos)
-    ac.setSize(timeOffsetMinusYearButton, 50*mult, dy-1)
-    ac.setFontSize(timeOffsetMinusYearButton, fntsize)
-    ac.addOnClickedListener(timeOffsetMinusYearButton, timeOffsetMinusYear)
-    xpos+=dx
-    timeOffsetPlusYearButton = ac.addButton(app, "+year")
-    ac.setPosition(timeOffsetPlusYearButton, xpos, ypos)
-    ac.setSize(timeOffsetPlusYearButton, 50*mult, dy-1)
-    ac.setFontSize(timeOffsetPlusYearButton, fntsize)
-    ac.addOnClickedListener(timeOffsetPlusYearButton, timeOffsetPlusYear)
     xpos+=dx+10*mult
     timeOffsetMinusPlayButton = ac.addButton(app, "- 10x")
     ac.setPosition(timeOffsetMinusPlayButton, xpos, ypos)
@@ -170,6 +143,33 @@ def appCreateMyself():
     ac.setSize(timeOffsetPlusPlayButton, 50*mult, dy-1)
     ac.setFontSize(timeOffsetPlusPlayButton, fntsize)
     ac.addOnClickedListener(timeOffsetPlusPlayButton, timeOffsetPlusPlay)
+
+
+    xpos=10
+    ypos=25+dy*2
+    timeOffsetMinusBigButton = ac.addButton(app, "−6hr")
+    ac.setPosition(timeOffsetMinusBigButton, xpos, ypos)
+    ac.setSize(timeOffsetMinusBigButton, 50*mult, dy-1)
+    ac.setFontSize(timeOffsetMinusBigButton, fntsize)
+    ac.addOnClickedListener(timeOffsetMinusBigButton, timeOffsetMinusBig)
+    xpos+=dx
+    timeOffsetPlusBigButton = ac.addButton(app, "+6hr")
+    ac.setPosition(timeOffsetPlusBigButton, xpos, ypos)
+    ac.setSize(timeOffsetPlusBigButton, 50*mult, dy-1)
+    ac.setFontSize(timeOffsetPlusBigButton, fntsize)
+    ac.addOnClickedListener(timeOffsetPlusBigButton, timeOffsetPlusBig)
+    xpos+=dx+10*mult
+    timeOffsetMinusYearButton = ac.addButton(app, "−year")
+    ac.setPosition(timeOffsetMinusYearButton, xpos, ypos)
+    ac.setSize(timeOffsetMinusYearButton, 50*mult, dy-1)
+    ac.setFontSize(timeOffsetMinusYearButton, fntsize)
+    ac.addOnClickedListener(timeOffsetMinusYearButton, timeOffsetMinusYear)
+    xpos+=dx
+    timeOffsetPlusYearButton = ac.addButton(app, "+year")
+    ac.setPosition(timeOffsetPlusYearButton, xpos, ypos)
+    ac.setSize(timeOffsetPlusYearButton, 50*mult, dy-1)
+    ac.setFontSize(timeOffsetPlusYearButton, fntsize)
+    ac.addOnClickedListener(timeOffsetPlusYearButton, timeOffsetPlusYear)
     xpos+=dx+10*mult
     timeOffsetMinusPlayBigButton = ac.addButton(app, "- 50x")
     ac.setPosition(timeOffsetMinusPlayBigButton, xpos, ypos)
