@@ -59,7 +59,8 @@ def appCreateMyself():
     app = ac.newApp("Shaders Patch Weather")
     ac.setTitle(app, "   Weather FX")
     ac.setSize(app, 335*mult, 420*mult)
-    ac.setVisible(app,1)
+
+    # ac.setVisible(app,1)
 
     label = ac.addLabel(app, "")
     ac.setFontSize(label, fntsize-1)
