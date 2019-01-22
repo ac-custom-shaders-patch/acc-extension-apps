@@ -1,13 +1,13 @@
 {
   "name": "Shaders Extension Weather FX",
-  "version": "0.1",
-  "author": "x4fab",
+  "version": "0.5",
+  "author": "x4fab, leBluem",
   "description": "Tool to develop and debug weather.",
   "tags": [
     "shaders extension",
     "ui",
     "debug"
   ],
-  "country": null,
-  "url": null
+  "country": "planet earth",
+  "url": "https://trello.com/c/2Nb19GnT/12-weather-fx"
 }
