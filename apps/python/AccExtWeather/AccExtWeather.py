@@ -59,7 +59,6 @@ def appCreateMyself():
     app = ac.newApp("Shaders Patch Weather")
     ac.setTitle(app, "   Weather FX")
     ac.setSize(app, 335*mult, 420*mult)
-
     # ac.setVisible(app,1)
 
     label = ac.addLabel(app, "")
@@ -103,7 +102,6 @@ def appCreateMyself():
     ac.setSize(timeOffsetPlusPlaySmallButton, 50*mult, dy-1)
     ac.setFontSize(timeOffsetPlusPlaySmallButton, fntsize)
     ac.addOnClickedListener(timeOffsetPlusPlaySmallButton, timeOffsetPlusPlaySmall)
-    ac.setVisible(app,1)
 
 
     xpos=10
