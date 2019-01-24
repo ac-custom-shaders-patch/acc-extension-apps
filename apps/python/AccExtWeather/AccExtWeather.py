@@ -1,4 +1,4 @@
-# AccExtWeather.py - v0.9 - by x4fab, leBluem, Blamer
+# AccExtWeather.py - v0.95 - by x4fab, leBluem, Blamer
 
 try:
     import ac
@@ -54,8 +54,10 @@ def appCreateMyself():
     global timeOffsetMinusSmallButton, timeOffsetPlusSmallButton, timeOffsetMinusBigButton, timeOffsetPlusBigButton, timeOffsetMinusHugeButton, timeOffsetPlusHugeButton, timeOffsetMinusPlayButton, timeOffsetPlusPlayButton
     global timeOffsetMinusSmallerButton, timeOffsetPlusSmallerButton, timeOffsetMinusPlaySmallButton, timeOffsetPlusPlaySmallButton
     global timeOffsetMinusMonthButton, timeOffsetPlusMonthButton, timeOffsetMinusYearButton, timeOffsetPlusYearButton
-    global sizeToggle, gAppsize, gHideBG
+    global sizeToggle, gAppsize, gHideBG, gHideWeather
 
+    xpos=10
+    ypos=35
     dx=50
     dy=15
     fntsize=12
@@ -68,18 +70,18 @@ def appCreateMyself():
 
     app = ac.newApp("Shaders Patch Weather")
     ac.setTitle(app, "   Weather FX")
-    ac.setSize(app, 335*mult, 420*mult)
-
-    xpos=10
-    ypos=35
+    if gHideWeather==True:
+        ac.setSize(app, 335*mult, 150*mult)
+    else:
+        ac.setSize(app, 335*mult, ypos+dy+10)
 
     label = ac.addLabel(app, "")
     ac.setFontSize(label, fntsize-1)
     ac.setPosition(label, 10, ypos+dy*3+3)
 
-    labeldate = ac.addLabel(app, "")
-    ac.setFontSize(labeldate, fntsize+1)
-    ac.setPosition(labeldate, 300*mult, ypos+dy*3+30)
+    #labeldate = ac.addLabel(app, "")
+    #ac.setFontSize(labeldate, fntsize+1)
+    #ac.setPosition(labeldate, 300*mult, ypos+dy*3+30)
 
     timeOffsetMinusSmallerButton = ac.addButton(app, "−5min")
     ac.setPosition(timeOffsetMinusSmallerButton, xpos, ypos)
@@ -329,7 +331,7 @@ def acUpdate(delta_t):
             day_offset = 0
         try:
             s = ac.ext_weatherDebugText()
-            s = s.replace('current day:', ' > current day:                   ')
+            s = s.replace('current day:', ' > current day:              ')
             if gWrapDebugText==True:
                 s = '\n'.join(s.strip() for s in re.findall(r'.{1,80}(?:\s+|$)', s))
                 s = s.replace('>>> Sol weather: v', '\n>>> Sol weather: v')
