@@ -5,10 +5,12 @@
 
 ## Python apps for Assetto Corsa Custom Shaders Patch
 
--3 python apps: 
+-4 python apps: 
 
 AccExtHelper - switching VAO/driver, step car back
 
 AccExtMirrors - smart mirrors control
 
 AccExtRain - wipers/rain intensity
+
+AccExtWeather - time options and weather info
