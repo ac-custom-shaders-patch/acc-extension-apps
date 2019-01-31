@@ -1,0 +1,13 @@
+{
+  "name": "Shaders Extension Weather FX",
+  "version": "0.1",
+  "author": "x4fab",
+  "description": "Tool to develop and debug weather.",
+  "tags": [
+    "shaders extension",
+    "ui",
+    "debug"
+  ],
+  "country": null,
+  "url": null
+}

@@ -218,9 +218,10 @@ def acUpdate(delta_t):
                 "Lights: " + str(ac.ext_getLightsNum())
                 + "\nVisible lights: " + str(ac.ext_getLightsVisible())
                 # + "\nMirror lights: " + str(ac.ext_getLightsMirrorVisible())
-                + "\nAmbient darkness: " + str(round(ac.ext_getAmbientMult(), 3))
+                # + "\nAmbient darkness: " + str(round(ac.ext_getAmbientMult(), 3))
+                + "\nAltitude: " + str(round(ac.ext_getAltitude(0), 5)) + " m"
                 + "\nCam.: " + ', '.join(str(round(x, 1)) for x in ac.ext_getCameraPos())
-                # + "\nVersion: " + ac.ext_version()
+                # + "\nVersion: " + str(ac.ext_patchVersionCode())
                 + "\nGr.: " + str(round(ac.ext_getTyreGrain(0, 3), 3)) + ", bl.: " + str(round(ac.ext_getTyreBlister(0, 3), 3)) + ", FS: " + str(round(ac.ext_getTyreFlatSpot(0, 3), 3))
                 # + "\nAngle sp. (dbg.): " + str(round(ac.ext_getAngleSpeed(), 3))
                 # + "\nCamera matr.: " + ', '.join(str(round(x, 2)) for x in ac.ext_getCameraMatrix())
