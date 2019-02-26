@@ -7,14 +7,15 @@ except ImportError:
 
 app = 0
 mirror = 0
-error = 0
 timer = 0
+debug = 0
 roles = "NLCR"
+isPatch = 1
 
 def acMain(ac_version):
-    global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue
+    global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, isPatch
     try:
-        app = ac.newApp("Shaders Patch Mirrors")
+        app = ac.newApp("Shaders Patch Mirrors 0.2")
         ac.setTitle(app, "Mirrors")
         ac.setSize(app, 144, 188)
 
@@ -88,7 +89,9 @@ def acMain(ac_version):
         ac.setFontSize(downButton, 14)
         ac.addOnClickedListener(downButton, downMirror)
     except:
+        isPatch = 0
         acTrace()
+    return "AccExtMirrors"
 
 def leftMirror(*args):
     try:
@@ -144,32 +147,33 @@ def toggleMonMirror(*args):
     except:
         acTrace()
 
-def acTrace(*args):
-    global error
-    if error < 10:
-        ac.log("Unexpected error:" + traceback.format_exc())
-    error += 1
-    ac.setText(debug, "Error")
+def acTrace():
+    isPatch=0
 
 def acUpdate(delta_t):
-    global error
-    global timer
+    global timer, isPatch
     timer += delta_t
-    if timer > 0.25:
-        timer = 0.0
-        try:
-            params = ac.ext_mirrorParams()
-            ac.setText(mirrorrole, roles[int(params[3])])
-            index = int(params[4])
-            if index > 0:
-                ac.setText(mirrorindex, str(index))
-            else:
-                ac.setText(mirrorindex, "")
-				
-            ac.setText(fovValue, str(int(params[1])))
-            if params[0] == True:
-                ac.setText(toggleMonButton, "M")
-            else:
-                ac.setText(toggleMonButton, "m")
-        except:
-            acTrace()
+    if timer > 0.25 and isPatch==1:
+        if isPatch==1:
+            timer = 0.0
+            try:
+                params = ac.ext_mirrorParams()
+                ac.setText(mirrorrole, roles[int(params[3])])
+                index = int(params[4])
+                if index > 0:
+                    ac.setText(mirrorindex, str(index))
+                else:
+                    ac.setText(mirrorindex, "")
+
+                ac.setText(fovValue, str(int(params[1])))
+                if params[0] == True:
+                    ac.setText(toggleMonButton, "M")
+                else:
+                    ac.setText(toggleMonButton, "m")
+            except:
+                acTrace()
+        else:
+            ac.setText(debug,'Shaders Patch not active')
+
+def acShutdown(*args):
+    return
