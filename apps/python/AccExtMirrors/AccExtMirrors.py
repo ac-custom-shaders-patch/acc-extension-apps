@@ -15,7 +15,7 @@ isPatch = 1
 def acMain(ac_version):
     global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, isPatch
     try:
-        app = ac.newApp("Shaders Patch Mirrors 0.2")
+        app = ac.newApp("Shaders Patch Mirrors")
         ac.setTitle(app, "Mirrors")
         ac.setSize(app, 144, 188)
 

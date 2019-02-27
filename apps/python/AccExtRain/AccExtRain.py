@@ -14,7 +14,7 @@ timer = 0.0
 
 def acMain(ac_version):
     global app, rainStrengthValue, rainWiperSpeedValue
-    app = ac.newApp("Shaders Patch Rain 0.2")
+    app = ac.newApp("Shaders Patch Rain")
     ac.setTitle(app, "Rain")
     ac.setSize(app, 174, 108)
 
