@@ -383,7 +383,7 @@ def getSettingsValue(parser, section, option, value, boolean = False):
         else:
             return parser.get(str(section), str(option))
     else:
-        return setSettingsValue(parser, section, option, value)
+        return str(value)
 
 def appReadSettings():
     global settingsFilePath, documentSectionGeneral
