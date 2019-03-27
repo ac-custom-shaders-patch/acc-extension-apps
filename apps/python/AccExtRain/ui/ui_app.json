@@ -2,7 +2,7 @@
   "name": "Shaders Extension Rain",
   "version": "0.2",
   "author": "henter, leBluem",
-  "description": "Adjust mirrors when having Real Mirrors enabled.",
+  "description": "Adjust rain and wipers when having weatherFX enabled.",
   "tags": [
     "shaders extension",
     "ui",
