@@ -471,6 +471,9 @@ def appReadTimeMultiplier():
         ac.log("AccExtWeatherFX: Unexpected error:" + traceback.format_exc())
     return
 
+def acShutdown(*args):
+    pass
+
 def acMain(ac_version):
     try:
         appReadSettings()
