@@ -59,7 +59,7 @@ def appCreateMyself():
     xpos=10
     ypos=35
     dx=50
-    dy=15
+    dy=20
     fntsize=12
     mult=1.0
     if gAppsize>=0.5 and gAppsize<=4.0:
@@ -70,10 +70,11 @@ def appCreateMyself():
 
     app = ac.newApp("Shaders Patch Weather")
     ac.setTitle(app, "   Weather FX")
-    if gHideWeather==True:
-        ac.setSize(app, 335*mult, 150*mult)
+    #ac.setSize(app, 420, 360) # v0.1
+    if gHideWeather:
+        ac.setSize(app, 335*mult, ypos+dy*3.5)
     else:
-        ac.setSize(app, 335*mult, ypos+dy+10)
+        ac.setSize(app, 335*mult, 380*mult)
 
     label = ac.addLabel(app, "")
     ac.setFontSize(label, fntsize-1)
@@ -321,7 +322,7 @@ def acUpdate(delta_t):
     global error, timer, day_offset, gWrapDebugText, gAppsize, gHideBG, gHideWeather
     timer += delta_t
     day_offset += speed * delta_t
-    if timer > 0.05:
+    if timer > 0.075:
         timer = 0.0
         if abs(day_offset) > 1:
             try:
@@ -331,21 +332,16 @@ def acUpdate(delta_t):
             day_offset = 0
         if error < 1:
             try:
-                s = ac.ext_weatherDebugText()
-                s = s.replace('current day:', ' > current day:              ')
-                if gWrapDebugText==True:
-                    s = '\n'.join(s.strip() for s in re.findall(r'.{1,80}(?:\s+|$)', s))
-                    s = s.replace('>>> Sol weather: v', '\n>>> Sol weather: v')
-                if gHideWeather==True:
-                    ss = s.split('\n')
-                    s=ss[0] + '\n' + ss[2]
-                ac.setText(label, s)
+                if not gHideWeather:
+                    s = ac.ext_weatherDebugText()
+                    s = s.replace('current day:', ' > current day:              ')
+                    if gWrapDebugText==True:
+                        s = '\n'.join(s.strip() for s in re.findall(r'.{1,80}(?:\s+|$)', s))
+                        s = s.replace('>>> Sol weather: v', '\n>>> Sol weather: v')
+                    ac.setText(label, s)
                 if gHideBG==True:
-                    try:
-                        ac.setBackgroundOpacity(app,0)
-                        ac.drawBorder(app,0)
-                    except:
-                        ac.log("AccExtWeatherFX: Unexpected error:" + traceback.format_exc())
+                    ac.setBackgroundOpacity(app,0)
+                    ac.drawBorder(app,0)
             except:
                 error = error + 1
                 ac.log("AccExtWeatherFX: Unexpected error:" + traceback.format_exc())
