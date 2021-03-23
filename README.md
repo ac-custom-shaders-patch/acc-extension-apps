@@ -14,3 +14,5 @@ AccExtMirrors - smart mirrors control
 AccExtRain - wipers/rain intensity
 
 AccExtWeather - time options and weather info
+
+![Imgur Image](https://i.imgur.com/B0izCQx.png)
