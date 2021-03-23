@@ -15,4 +15,4 @@ AccExtRain - wipers/rain intensity
 
 AccExtWeather - time options and weather info
 
-![Imgur Image](https://i.imgur.com/B0izCQx.png)
+![Imgur Image](https://i.imgur.com/Q2zx6mw.png)
