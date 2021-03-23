@@ -1,9 +1,15 @@
 try:
-    import ac
-    import acsys
-    import traceback
+    import ac, acsys, traceback
 except ImportError:
     pass
+
+# CSP values are saved in
+# Documents\Assetto Corsa\cfg\extension\real_mirrors\carname.ini
+# [REAL_MIRROR_0] ... [REAL_MIRROR_x] , as many x mirrors there are
+# FLIP=0                ; or 1/2/3
+# ROTATION = 0.00,0.00  ; x,y
+# ASPECT_MULT = 1.2     ; 0.1 ... 2.0
+# IS_MONITOR = 0        ; or 1
 
 app = 0
 mirror = 0
@@ -13,11 +19,11 @@ roles = "NLCR"
 isPatch = 1
 
 def acMain(ac_version):
-    global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, isPatch
+    global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, isPatch, arUp, arDown
     try:
         app = ac.newApp("Shaders Patch Mirrors")
         ac.setTitle(app, "Mirrors")
-        ac.setSize(app, 144, 188)
+        ac.setSize(app, 144, 213)
 
         debug = ac.addLabel(app, "")
         ac.setPosition(debug, 16, 164)
@@ -36,13 +42,13 @@ def acMain(ac_version):
         ac.setPosition(fovValue, 108, 112)
 
         fovUpButton = ac.addButton(app, "+")
-        ac.setPosition(fovUpButton, 104, 88)
+        ac.setPosition(fovUpButton, 104, 84)
         ac.setSize(fovUpButton, 24, 24)
         ac.setFontSize(fovUpButton, 14)
         ac.addOnClickedListener(fovUpButton, fovUpMirror)
 
         fovDownButton = ac.addButton(app, "-")
-        ac.setPosition(fovDownButton, 104, 136)
+        ac.setPosition(fovDownButton, 104, 132)
         ac.setSize(fovDownButton, 24, 24)
         ac.setFontSize(fovDownButton, 14)
         ac.addOnClickedListener(fovDownButton, fovDownMirror)
@@ -66,31 +72,45 @@ def acMain(ac_version):
         ac.addOnClickedListener(nextButton, nextMirror)
 
         leftButton = ac.addButton(app, "L")
-        ac.setPosition(leftButton, 16, 112)
+        ac.setPosition(leftButton, 16, 108)
         ac.setSize(leftButton, 24, 24)
         ac.setFontSize(leftButton, 14)
         ac.addOnClickedListener(leftButton, leftMirror)
 
         rightButton = ac.addButton(app, "R")
-        ac.setPosition(rightButton, 64, 112)
+        ac.setPosition(rightButton, 64, 108)
         ac.setSize(rightButton, 24, 24)
         ac.setFontSize(rightButton, 14)
         ac.addOnClickedListener(rightButton, rightMirror)
 
         upButton = ac.addButton(app, "U")
-        ac.setPosition(upButton, 40, 88)
+        ac.setPosition(upButton, 40, 84)
         ac.setSize(upButton, 24, 24)
         ac.setFontSize(upButton, 14)
         ac.addOnClickedListener(upButton, upMirror)
 
         downButton = ac.addButton(app, "D")
-        ac.setPosition(downButton, 40, 136)
+        ac.setPosition(downButton, 40, 132)
         ac.setSize(downButton, 24, 24)
         ac.setFontSize(downButton, 14)
         ac.addOnClickedListener(downButton, downMirror)
+
+        arDown = ac.addButton(app, "  -")
+        ac.setPosition(arDown, 15, 168)
+        ac.setSize(arDown, 24, 24)
+        ac.setFontSize(arDown, 14)
+        ac.addOnClickedListener(arDown, downAR)
+        ac.setFontAlignment(arDown, "left")
+
+        arUp = ac.addButton(app, "+")
+        ac.setPosition(arUp, 65, 168)
+        ac.setSize(arUp, 24, 24)
+        ac.setFontSize(arUp, 14)
+        ac.addOnClickedListener(arUp, upAR)
+
     except:
         isPatch = 0
-        acTrace()
+
     return "AccExtMirrors"
 
 def leftMirror(*args):
@@ -147,6 +167,18 @@ def toggleMonMirror(*args):
     except:
         acTrace()
 
+def downAR(*args):
+    try:
+        ac.ext_mirrorAspectRatioDown()
+    except:
+        acTrace()
+
+def upAR(*args):
+    try:
+        ac.ext_mirrorAspectRatioUp()
+    except:
+        acTrace()
+
 def acTrace():
     isPatch=0
 
@@ -170,6 +202,7 @@ def acUpdate(delta_t):
                     ac.setText(toggleMonButton, "M")
                 else:
                     ac.setText(toggleMonButton, "m")
+                ac.setText(arDown, '  -   ' + str(round(float(params[2]),1) ) + '\n       AR')
             except:
                 acTrace()
         else:
