@@ -1,5 +1,10 @@
 # acc-extension-apps
 
+## download: 
+  - https://github.com/ac-custom-shaders-patch/acc-extension-apps/releases/tag/1.6
+
+## install:
+  - unpack to ac-root "steamapps\common\assettocorsa"
 ## source: 
   - https://discordapp.com/channels/453595061788344330/
 
