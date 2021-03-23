@@ -1,6 +1,6 @@
 {
   "name": "Shaders Extension Debug",
-  "version": "0.1",
+  "version": "0.3",
   "author": "x4fab",
   "description": "Displays some information such as number of lights in total. Might be helpful if you’re setting up track lights.",
   "tags": [
