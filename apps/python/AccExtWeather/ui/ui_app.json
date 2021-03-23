@@ -1,13 +1,11 @@
 {
   "name": "Shaders Extension Weather FX",
-  "version": "1.5",
-  "author": "x4fab, leBluem, Blamer, demonized",
-  "description": "Tool to develop and debug weather and time. Contains BLM apps code.",
+  "version": "0.95",
+  "author": "x4fab, leBluem, Blamer",
+  "description": "Tool to develop and debug weather. Contains BLM apps code.",
   "tags": [
     "shaders extension",
     "ui",
-    "time",
-    "date",
     "debug"
   ],
   "country": "planet earth",
