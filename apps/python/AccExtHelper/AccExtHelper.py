@@ -125,7 +125,6 @@ def acMain(ac_version):
         ac.setPosition(label, 5, 103)
 
         ac.drawBackground(app,0)
-        ac.setVisible(app,1)
 
         sVer = "CSP v" + str(ac.ext_patchVersion()) + "-code" + str(ac.ext_patchVersionCode())
         # i = 0
