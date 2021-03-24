@@ -104,7 +104,6 @@ def acMain(ac_version):
         ac.setSize(lightsDebugButton, 40, 20)
         ac.setFontSize(lightsDebugButton, 14)
         ac.addOnClickedListener(lightsDebugButton, lightsDebug)
-        ac.setVisible(app,1)
 
         stepBackButton = ac.addButton(app, "Step back")
         ac.setPosition(stepBackButton, 20, 65)
