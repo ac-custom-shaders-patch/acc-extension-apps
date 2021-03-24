@@ -67,6 +67,7 @@ def acMain(ac_version):
         app = ac.newApp("Shaders Patch Debug")
         ac.setTitle(app, "  Shaders Patch Debug")
         ac.setSize(app, 180, 358)
+        ac.drawBackground(app,0)
 
         driverToggleButton = ac.addButton(app, "Driver")
         ac.setPosition(driverToggleButton, 20, 25)
@@ -122,8 +123,6 @@ def acMain(ac_version):
         label = ac.addLabel(app, "")
         ac.setFontSize(label, 12)
         ac.setPosition(label, 5, 103)
-
-        ac.drawBackground(app,0)
 
         sVer = "CSP v" + str(ac.ext_patchVersion()) + "-code" + str(ac.ext_patchVersionCode())
         # i = 0
