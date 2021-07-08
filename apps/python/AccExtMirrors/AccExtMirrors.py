@@ -5,6 +5,7 @@ except ImportError:
 
 # CSP values are saved in
 # Documents\Assetto Corsa\cfg\extension\real_mirrors\carname.ini
+#
 # [REAL_MIRROR_0] ... [REAL_MIRROR_x] , as many x mirrors there are
 # FLIP=0                ; or 1/2/3
 # ROTATION = 0.00,0.00  ; x,y
@@ -19,14 +20,15 @@ roles = "NLCR"
 isPatch = 1
 
 def acMain(ac_version):
-    global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, isPatch, arUp, arDown
+    global app, debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, arUp, arDown, isPatch
+    global fovLabel, fovUpButton, fovDownButton, prevButton, nextButton, leftButton, rightButton, upButton, downButton
     try:
         app = ac.newApp("Shaders Patch Mirrors")
         ac.setTitle(app, "Mirrors")
         ac.setSize(app, 144, 213)
 
         debug = ac.addLabel(app, "")
-        ac.setPosition(debug, 16, 164)
+        ac.setPosition(debug, 6, 35)
 
         mirrorrole = ac.addLabel(app, "")
         ac.setPosition(mirrorrole, 44, 40)
@@ -182,31 +184,84 @@ def upAR(*args):
 def acTrace():
     isPatch=0
 
-def acUpdate(delta_t):
-    global timer, isPatch
-    timer += delta_t
-    if timer > 0.25 and isPatch==1:
-        if isPatch==1:
-            timer = 0.0
-            try:
-                params = ac.ext_mirrorParams()
-                ac.setText(mirrorrole, roles[int(params[3])])
-                index = int(params[4])
-                if index > 0:
-                    ac.setText(mirrorindex, str(index))
-                else:
-                    ac.setText(mirrorindex, "")
+def HideControls():
+    global app, mirrorrole, mirrorindex, toggleMonButton, fovValue, arUp, arDown
+    global fovLabel, fovUpButton, fovDownButton, prevButton, nextButton, leftButton, rightButton, upButton, downButton
+    ac.setSize(app, 144, 65)
+    ac.setVisible(mirrorrole,0)
+    ac.setVisible(mirrorindex,0)
+    ac.setVisible(fovValue,0)
+    ac.setVisible(fovLabel,0)
+    ac.setVisible(fovUpButton,0)
+    ac.setVisible(fovDownButton,0)
+    ac.setVisible(prevButton,0)
+    ac.setVisible(nextButton,0)
+    ac.setVisible(leftButton,0)
+    ac.setVisible(rightButton,0)
+    ac.setVisible(upButton,0)
+    ac.setVisible(downButton,0)
+    ac.setVisible(arUp,0)
+    ac.setVisible(arDown,0)
 
-                ac.setText(fovValue, str(int(params[1])))
-                if params[0] == True:
-                    ac.setText(toggleMonButton, "M")
+def ShowControls():
+    global app, mirrorrole, mirrorindex, toggleMonButton, fovValue, arUp, arDown
+    global fovLabel, fovUpButton, fovDownButton, prevButton, nextButton, leftButton, rightButton, upButton, downButton
+    ac.setSize(app, 144, 213)
+    ac.setVisible(mirrorrole,1)
+    ac.setVisible(mirrorindex,1)
+    ac.setVisible(fovValue,1)
+    ac.setVisible(fovLabel,1)
+    ac.setVisible(fovUpButton,1)
+    ac.setVisible(fovDownButton,1)
+    ac.setVisible(prevButton,1)
+    ac.setVisible(nextButton,1)
+    ac.setVisible(leftButton,1)
+    ac.setVisible(rightButton,1)
+    ac.setVisible(upButton,1)
+    ac.setVisible(downButton,1)
+    ac.setVisible(arUp,1)
+    ac.setVisible(arDown,1)
+
+
+def acUpdate(delta_t):
+    global timer, isPatch, app
+    global debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, arDown
+    timer += delta_t
+    if timer > 0.333:
+        timer = 0.0
+        if isPatch==1:
+            try:
+                cammode = ac.getCameraMode()
+                if cammode == acsys.CM.Cockpit:
+                    params = ac.ext_mirrorParams()
+                    ac.setText(mirrorrole, roles[int(params[3])])
+                    index = int(params[4])
+                    if index > 0:
+                        ac.setText(mirrorindex, str(index))
+                    else:
+                        ac.setText(mirrorindex, "")
+
+                    ac.setText(fovValue, str(int(params[1])))
+                    if params[0] == True:
+                        ac.setText(toggleMonButton, "M")
+                        ac.setText(debug, 'set to Monitor')
+                        HideControls()
+                    else:
+                        ac.setText(toggleMonButton, "m")
+                        ac.setText(debug, '')
+                        ShowControls()
+                    ac.setText(arDown, '  -   ' + str(round(float(params[2]),1) ) + '\n       AR')
+                    ac.setVisible(toggleMonButton,1)
                 else:
-                    ac.setText(toggleMonButton, "m")
-                ac.setText(arDown, '  -   ' + str(round(float(params[2]),1) ) + '\n       AR')
+                    HideControls()
+                    ac.setVisible(toggleMonButton,0)
+                    ac.setVisible(mirrorrole,0)
+                    ac.setText(debug, 'Not in Cockpit cam.')
+                    ac.setSize(app, )
             except:
                 acTrace()
         else:
-            ac.setText(debug,'Shaders Patch not active')
+            ac.setText(debug,'Shaders Patch not active.')
 
 def acShutdown(*args):
     return
