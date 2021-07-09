@@ -188,7 +188,6 @@ def HideControls():
     global app, mirrorrole, mirrorindex, toggleMonButton, fovValue, arUp, arDown
     global fovLabel, fovUpButton, fovDownButton, leftButton, rightButton, upButton, downButton
     ac.setSize(app, 144, 85)
-    ac.setVisible(mirrorrole,0)
     ac.setVisible(mirrorindex,0)
     ac.setVisible(fovValue,0)
     ac.setVisible(fovLabel,0)
@@ -205,7 +204,6 @@ def ShowControls():
     global app, mirrorrole, mirrorindex, toggleMonButton, fovValue, arUp, arDown
     global fovLabel, fovUpButton, fovDownButton, leftButton, rightButton, upButton, downButton
     ac.setSize(app, 144, 213)
-    ac.setVisible(mirrorrole,1)
     ac.setVisible(mirrorindex,1)
     ac.setVisible(fovValue,1)
     ac.setVisible(fovLabel,1)
@@ -248,11 +246,13 @@ def acUpdate(delta_t):
                         ShowControls()
                     ac.setText(arDown, '  -   ' + str(round(float(params[2]),1) ) + '\n       AR')
                     ac.setVisible(toggleMonButton,1)
+                    ac.setVisible(mirrorrole,1)
                     ac.setVisible(prevButton,1)
                     ac.setVisible(nextButton,1)
                 else:
                     HideControls()
                     ac.setVisible(toggleMonButton,0)
+                    ac.setVisible(mirrorrole,0)
                     ac.setVisible(prevButton,0)
                     ac.setVisible(nextButton,0)
                     ac.setText(debug, 'Not in Cockpit cam.')
