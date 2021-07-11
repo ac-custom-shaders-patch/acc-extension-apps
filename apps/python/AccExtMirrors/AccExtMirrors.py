@@ -3,7 +3,7 @@ try:
 except ImportError:
     pass
 
-# CSP values are saved in
+# values are saved by CSP in
 # Documents\Assetto Corsa\cfg\extension\real_mirrors\carname.ini
 #
 # [REAL_MIRROR_0] ... [REAL_MIRROR_x] , as many x mirrors there are
@@ -16,7 +16,8 @@ app = 0
 mirror = 0
 timer = 0
 debug = 0
-roles = "NLCR"
+roles = ["None", "Left", "Center", "Right"]
+# roles = "NLCR"
 isPatch = 1
 
 def acMain(ac_version):
@@ -31,7 +32,8 @@ def acMain(ac_version):
         ac.setPosition(debug, 6, 65)
 
         mirrorrole = ac.addLabel(app, "")
-        ac.setPosition(mirrorrole, 44, 40)
+        ac.setPosition(mirrorrole, 48, 22)
+        ac.setFontAlignment(mirrorrole, "center")
 
         mirrorindex = ac.addLabel(app, "")
         ac.setPosition(mirrorindex, 54, 46)
@@ -41,7 +43,7 @@ def acMain(ac_version):
         ac.setPosition(fovLabel, 102, 164)
 
         fovValue = ac.addLabel(app, "")
-        ac.setPosition(fovValue, 108, 112)
+        ac.setPosition(fovValue, 108, 110)
 
         fovUpButton = ac.addButton(app, "+")
         ac.setPosition(fovUpButton, 104, 84)
@@ -62,36 +64,36 @@ def acMain(ac_version):
         ac.addOnClickedListener(toggleMonButton, toggleMonMirror)
 
         prevButton = ac.addButton(app, "-")
-        ac.setPosition(prevButton, 16, 40)
-        ac.setSize(prevButton, 24, 24)
+        ac.setPosition(prevButton, 16, 44)
+        ac.setSize(prevButton, 30, 20)
         ac.setFontSize(prevButton, 14)
         ac.addOnClickedListener(prevButton, prevMirror)
 
         nextButton = ac.addButton(app, "+")
-        ac.setPosition(nextButton, 64, 40)
-        ac.setSize(nextButton, 24, 24)
+        ac.setPosition(nextButton, 58, 44)
+        ac.setSize(nextButton, 30, 20)
         ac.setFontSize(nextButton, 14)
         ac.addOnClickedListener(nextButton, nextMirror)
 
-        leftButton = ac.addButton(app, "L")
+        leftButton = ac.addButton(app, "◁") # "L"
         ac.setPosition(leftButton, 16, 108)
         ac.setSize(leftButton, 24, 24)
         ac.setFontSize(leftButton, 14)
         ac.addOnClickedListener(leftButton, leftMirror)
 
-        rightButton = ac.addButton(app, "R")
+        rightButton = ac.addButton(app, "▷") # "R")
         ac.setPosition(rightButton, 64, 108)
         ac.setSize(rightButton, 24, 24)
         ac.setFontSize(rightButton, 14)
         ac.addOnClickedListener(rightButton, rightMirror)
 
-        upButton = ac.addButton(app, "U")
+        upButton = ac.addButton(app, "△") # "U")
         ac.setPosition(upButton, 40, 84)
         ac.setSize(upButton, 24, 24)
         ac.setFontSize(upButton, 14)
         ac.addOnClickedListener(upButton, upMirror)
 
-        downButton = ac.addButton(app, "D")
+        downButton = ac.addButton(app, "▽") # "D")
         ac.setPosition(downButton, 40, 132)
         ac.setSize(downButton, 24, 24)
         ac.setFontSize(downButton, 14)
@@ -183,6 +185,7 @@ def upAR(*args):
 
 def acTrace():
     isPatch=0
+    ac.log(traceback.format_exc())
 
 def HideControls():
     global app, mirrorrole, mirrorindex, toggleMonButton, fovValue, arUp, arDown
@@ -218,7 +221,7 @@ def ShowControls():
 
 
 def acUpdate(delta_t):
-    global timer, isPatch, app
+    global timer, isPatch, app, roles
     global debug, mirrorrole, mirrorindex, toggleMonButton, fovValue, arDown, arUp, prevButton, nextButton
     timer += delta_t
     if timer > 0.333:
@@ -250,13 +253,12 @@ def acUpdate(delta_t):
                     ac.setVisible(prevButton,1)
                     ac.setVisible(nextButton,1)
                 else:
+                    ac.setText(debug, 'Not in Cockpit cam.')
                     HideControls()
                     ac.setVisible(toggleMonButton,0)
                     ac.setVisible(mirrorrole,0)
                     ac.setVisible(prevButton,0)
                     ac.setVisible(nextButton,0)
-                    ac.setText(debug, 'Not in Cockpit cam.')
-                    ac.setSize(app, )
             except:
                 acTrace()
         else:
